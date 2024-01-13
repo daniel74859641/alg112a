@@ -1,0 +1,34 @@
+import numpy as np
+
+def hill_climbing_optimization(objective_function, initial_solution, step_size=0.01, max_iterations=1000, tolerance=1e-6):
+   
+   
+    current_solution = np.array(initial_solution)
+
+    for iteration in range(max_iterations):
+        current_value = objective_function(current_solution)
+
+       
+        new_solution = current_solution + step_size * np.random.rand(*current_solution.shape)
+
+        
+        new_value = objective_function(new_solution)
+
+        
+        if new_value > current_value:
+            current_solution = new_solution
+
+       
+        if abs(new_value - current_value) < tolerance:
+            break
+
+    return current_solution
+
+
+def objective_function(x):
+    return -x[0]**2 - x[1]**2  
+initial_solution = [1.0, 1.0]
+result = hill_climbing_optimization(objective_function, initial_solution)
+
+print("Optimal Solution:", result)
+print("Objective Value at Optimal Solution:", objective_function(result))
