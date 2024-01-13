@@ -1,0 +1,33 @@
+def polynomial(coefficients, x):
+   
+    result = 0
+    for i, coef in enumerate(coefficients):
+        result += coef * (x ** i)
+    return result
+
+def derivative(coefficients):
+    
+    return [i * coef for i, coef in enumerate(coefficients)][1:]
+
+def newton_method(coefficients, initial_guess, tolerance=1e-6, max_iterations=100):
+    
+    x = initial_guess
+
+    for _ in range(max_iterations):
+        fx = polynomial(coefficients, x)
+        f_prime_x = polynomial(derivative(coefficients), x)
+
+        if abs(f_prime_x) < tolerance:
+            break
+
+        x = x - fx / f_prime_x
+
+    return x
+
+
+coefficients = [1, -6, 11, -6]  
+initial_guess = 2.0
+result = newton_method(coefficients, initial_guess)
+
+print("Root found:", result)
+print("Polynomial value at the root:", polynomial(coefficients, result))
