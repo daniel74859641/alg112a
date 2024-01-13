@@ -1,0 +1,5 @@
+def power2n_iterative(n):
+    result = 1
+    for _ in range(n):
+        result *= 2
+    return result
