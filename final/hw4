@@ -1,0 +1,39 @@
+def iterative_solver(f, initial_guess, tolerance=1e-6, max_iterations=100):
+    """
+    使用迭代法解方程 f(x) = 0。
+
+    :param f: 要解的方程式
+    :param initial_guess: 初步猜測值
+    :param tolerance: 允許的誤差容限
+    :param max_iterations: 最大迭代次數
+    :return: 解的近似值
+    """
+    x = initial_guess
+
+    for iteration in range(max_iterations):
+        
+        fx = f(x)
+
+        
+        if abs(fx) < tolerance:
+            return x
+
+        
+        x = x - fx / derivative(f, x)
+
+   
+    return x
+
+
+def derivative(f, x, h=1e-6):
+   
+    return (f(x + h) - f(x - h)) / (2 * h)
+
+
+
+def target_function(x):
+    return x**2 - 4 
+
+initial_guess = 2.0  
+solution = iterative_solver(target_function, initial_guess)
+print("Approximate solution:", solution)
