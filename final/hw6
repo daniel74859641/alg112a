@@ -1,0 +1,43 @@
+import numpy as np
+
+def gradient_descent_optimization(objective_function, gradient_function, initial_solution, learning_rate=0.01, max_iterations=1000, tolerance=1e-6):
+    """
+    梯度下降法尋找函數的最小值。
+
+    :param objective_function: 目標函數，接受一個向量作為輸入
+    :param gradient_function: 目標函數的梯度函數，接受一個向量作為輸入
+    :param initial_solution: 初始解向量
+    :param learning_rate: 學習率
+    
+    current_solution = np.array(initial_solution)
+
+    for iteration in range(max_iterations):
+        current_value = objective_function(current_solution)
+
+        
+        gradient = gradient_function(current_solution)
+
+        
+        current_solution = current_solution - learning_rate * gradient
+
+       
+        new_value = objective_function(current_solution)
+
+        
+        if abs(new_value - current_value) < tolerance:
+            break
+
+    return current_solution
+
+
+def objective_function(x):
+    return x[0]**2 + x[1]**2  
+
+def gradient_function(x):
+    return np.array([2 * x[0], 2 * x[1]])  
+
+initial_solution = [1.0, 1.0]
+result = gradient_descent_optimization(objective_function, gradient_function, initial_solution)
+
+print("Optimal Solution:", result)
+print("Objective Value at Optimal Solution:", objective_function(result))
