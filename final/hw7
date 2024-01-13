@@ -1,0 +1,38 @@
+import numpy as np
+from micrograd import autograd, nn
+
+class CustomFunction(nn.Module):
+    def forward(self, x):
+        return x[0]**2 + x[1]**2
+
+
+initial_solution = [1.0, 1.0]
+
+
+initial_solution = [autograd.Variable(val, requires_grad=True) for val in initial_solution]
+
+
+objective_function = CustomFunction()
+
+
+optimizer = nn.SGD(parameters=initial_solution, lr=0.01)
+
+
+for epoch in range(1000):
+   
+    loss = objective_function(initial_solution)
+
+   
+    loss.backward()
+
+    
+    optimizer.step()
+
+   
+    optimizer.zero_grad()
+
+
+result = [float(val.data) for val in initial_solution]
+
+print("Optimal Solution:", result)
+print("Objective Value at Optimal Solution:", objective_function(result))
