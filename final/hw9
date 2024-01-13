@@ -1,0 +1,53 @@
+def solve_maze(maze):
+    start = find_start(maze)
+    end = find_end(maze)
+    visited = set()
+
+    if dfs(maze, start, end, visited):
+        print("Path found:")
+        print_maze(maze)
+    else:
+        print("No path found.")
+
+def find_start(maze):
+    for i in range(len(maze)):
+        for j in range(len(maze[0])):
+            if maze[i][j] == 'S':
+                return (i, j)
+
+def find_end(maze):
+    for i in range(len(maze)):
+        for j in range(len(maze[0])):
+            if maze[i][j] == 'E':
+                return (i, j)
+
+def dfs(maze, current, end, visited):
+    i, j = current
+
+    if current == end:
+        return True
+
+    if 0 <= i < len(maze) and 0 <= j < len(maze[0]) and maze[i][j] != '#' and current not in visited:
+        visited.add(current)
+
+        if dfs(maze, (i + 1, j), end, visited) or dfs(maze, (i - 1, j), end, visited) \
+            or dfs(maze, (i, j + 1), end, visited) or dfs(maze, (i, j - 1), end, visited):
+            maze[i][j] = '.'  
+            return True
+
+    return False
+
+def print_maze(maze):
+    for row in maze:
+        print(' '.join(row))
+
+
+maze = [
+    ['S', '.', '.', '#', '.', '.'],
+    ['#', '#', '.', '#', '.', '#'],
+    ['#', '.', '.', '.', '.', '#'],
+    ['#', '#', '#', '#', '#', '#'],
+    ['.', '.', '.', '.', '.', 'E']
+]
+
+solve_maze(maze)
